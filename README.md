@@ -34,6 +34,8 @@ WhaTap APM 지표로 결과를 리뷰합니다. 기존에는 이 리뷰 자료�
 | KPI 자동 계산 | 회차별/전체 최대 TPS, 최대 평균 응답시간, 최대 동시 Active Tx, 피크 동시접속, 총 처리요청 추정 |
 | 추이 차트 | TPS·응답시간·Active Tx 시간대별 SVG 차트 (외부 라이브러리 없음) |
 | 정성 분석 첨부 | 원인 분석·작업 기록 마크다운을 `--notes`로 넘기면 리포트 하단에 섹션으로 첨부 |
+| 학년도·학기 표기 | `--year 2026 --term 2` → 리포트에 "2026학년도 2학기" 표기 |
+| **지난 학기 비교** | 지난 학기 요약(JSON) 또는 CSV와 KPI·회차별 수치 비교, 증감률·개선/악화 판정, 추이 겹쳐 보기 차트 |
 | 산출물 | 라이트/다크 테마, 반응형, **의존성 없는 단일 HTML** — 메일·메신저로 바로 공유 가능 |
 
 **Before → After**
@@ -44,6 +46,7 @@ WhaTap APM 지표로 결과를 리뷰합니다. 기존에는 이 리뷰 자료�
 | 회차 구분 기준 | 사람 판단 | 임계·간격 파라미터로 일관 적용 |
 | 결과 형태 | 캡처 이미지 + 엑셀 | 수치표 + 차트가 들어간 단일 HTML |
 | 재사용 | 매번 새로 작성 | 다음 학기에도 날짜만 바꿔 실행 |
+| 학기 간 비교 | 지난 자료를 찾아 수작업 대조 | 학기별 요약을 쌓아 두면 지난 학기와 자동 비교 |
 
 ## 3. 실제 데이터 테스트 결과
 
@@ -77,11 +80,15 @@ WhaTap APM 지표로 결과를 리뷰합니다. 기존에는 이 리뷰 자료�
 
 ### 참고: 합성 샘플 실행 결과
 
-저장소에 동봉된 `sample_perf.csv`(합성 데이터)로 실행한 결과입니다. 누구나 그대로 재현할 수 있습니다.
+저장소에 동봉된 합성 데이터 `sample_perf.csv`(이번 학기 가정)와 `sample_prev_perf.csv`(지난 학기 가정)로 실행한 결과입니다. 누구나 그대로 재현할 수 있습니다.
 
 ```
-$ python generate_report.py --csv sample_perf.csv --out sample_report.html
+$ python generate_report.py --csv sample_perf.csv --title "수강신청 부하테스트 (샘플)" \
+    --year 2025 --term 1 \
+    --compare sample_prev_perf.csv --compare-year 2024 --compare-term 2 \
+    --out sample_report.html --no-summary
 리포트 생성 완료: sample_report.html
+  학기      : 2025학년도 1학기
   분석 구간 : 2025-01-01 08:00:00 ~ 2025-01-01 20:55:00
   세션 수   : 3
    - 1차 10:00~10:05  TPS<=950  RT<=140ms  ActiveTx<=1,100
@@ -89,6 +96,13 @@ $ python generate_report.py --csv sample_perf.csv --out sample_report.html
    - 3차 15:00~15:10  TPS<=2,600  RT<=620ms  ActiveTx<=3,800
   피크 TPS  : 2,600 @ 15:00
   피크 ATx  : 3,800 @ 15:00
+  지난 학기 대비 (2024학년도 2학기 → 2025학년도 1학기)
+   - 최대 TPS : 1,950 → 2,600  [+650 (+33.3%)]
+   - 최대 동시 Active Tx : 4,940 → 3,800  [−1,140 (−23.1%)]
+   - 최대 평균 응답시간 (ms) : 992 → 620  [−372 (−37.5%)]
+   - 피크 동시접속 : 13 → 16  [+3 (+25.0%)]
+   - 총 처리요청 (추정) : 2,557,590 → 3,408,840  [+851,250 (+33.3%)]
+   - 부하 세션 수 : 3 → 3  [±0 (±0.0%)]
 ```
 
 ---
@@ -120,6 +134,13 @@ python generate_report.py --csv <성능추이.csv> [옵션]
 | `--notes` | 정성 분석 마크다운(.md) 첨부 | 없음 |
 | `--tps-threshold` | 세션 탐지 TPS 임계 | 50 |
 | `--max-gap-min` | 세션 병합 최대 간격(분) | 30 |
+| `--year` | 학년도 (예: `2026`) | 없음 |
+| `--term` | 학기: `1` \| `2` \| `여름` \| `겨울` | 없음 |
+| `--compare` | 비교 대상: 지난 학기 `.summary.json` 또는 성능추이 CSV | 없음 |
+| `--compare-year` / `--compare-term` | 비교 대상이 CSV일 때 그 학기 정보 | 없음 |
+| `--compare-start` / `--compare-end` | 비교 대상 CSV의 분석 구간 | 전체 |
+| `--history-dir` | 학기별 요약 보관 폴더 (자동 저장 + 지난 학기 자동 비교) | 없음 |
+| `--no-summary` | `<out>.summary.json` 저장 안 함 | 저장함 |
 
 예시:
 
@@ -145,6 +166,46 @@ CSV 헤더 형식:
 "Timestamp","Realtime User (count)","TPS","Response Time (ms)","CPU (%)","Heap (byte)","Active Tx (count)"
 ```
 
+### 지난 학기와 비교
+
+리포트를 만들 때마다 집계 요약 `<out>.summary.json`(KPI·회차별 수치·추이)이 함께 저장됩니다.
+원본 CSV 없이 이 요약만으로 다음 학기에 비교할 수 있습니다.
+
+**방법 1 — history 폴더로 자동 비교 (권장)**
+
+```bash
+# 2026학년도 1학기: history/2026-1.json 으로 저장
+python generate_report.py --csv perf_2026_1.csv --year 2026 --term 1 --history-dir history
+
+# 2026학년도 2학기: history 에서 지난 학기(2026-1)를 찾아 자동 비교, history/2026-2.json 저장
+python generate_report.py --csv perf_2026_2.csv --year 2026 --term 2 --history-dir history
+```
+
+- 학년도 내 순서: 1학기 → 여름 계절학기 → 2학기 → 겨울 계절학기
+- **정규학기(1·2)는 직전 정규학기**, **계절학기는 직전 계절학기**와 비교합니다.
+- 해당하는 지난 학기 요약이 없으면 비교 없이 리포트만 생성합니다.
+
+**방법 2 — 비교 대상 직접 지정**
+
+```bash
+# 저장해 둔 요약 JSON 과 비교
+python generate_report.py --csv perf.csv --year 2026 --term 2 --compare history/2026-1.json
+
+# 지난 학기 원본 CSV 와 바로 비교 (같은 탐지 파라미터로 즉석 분석)
+python generate_report.py --csv perf.csv --year 2026 --term 2 \
+  --compare perf_2026_1.csv --compare-year 2026 --compare-term 1
+```
+
+**리포트의 "지난 학기 대비" 섹션**
+
+- KPI 비교표: 최대 TPS·동시 Active Tx·평균 응답시간·동시접속·총 처리요청·세션 수의 증감과 증감률
+- 판정: 응답시간·동시 Active Tx는 **낮을수록 개선**(±5% 미만은 "유사"). TPS·처리요청은 투입 부하에 따라 달라지므로 증감만 표시
+- 회차별 비교표 (1차 vs 1차 …)
+- 추이 겹쳐 보기: 각 학기 첫 부하 시점 기준으로 TPS·응답시간 곡선을 겹쳐 표시 (이번 학기 실선, 지난 학기 점선)
+- 두 학기의 세션 탐지 파라미터가 다르면 경고 표시
+
+> `*.summary.json`, `history/` 는 실제 집계값이라 `.gitignore`로 제외되어 있습니다. 로컬(또는 공유 드라이브)에 보관하세요.
+
 ### 세션 자동 탐지 방식
 
 - `TPS >= tps-threshold`(기본 50)인 5분 버킷을 **활성**으로 판단
@@ -160,7 +221,7 @@ CSV 헤더 형식:
 
 ## 5. 향후 개선 계획
 
-- 회차 간 비교(이전 학기 대비) 섹션
+- ~~회차 간 비교(이전 학기 대비) 섹션~~ → 학년도·학기 + 지난 학기 비교로 구현 완료
 - 목표치(SLA: 응답시간·TPS) 입력 시 달성 여부 자동 판정
 - WhaTap CSV 다운로드 자동화
 

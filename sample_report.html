@@ -1,4 +1,4 @@
-<meta charset="utf-8"><title>부하테스트 결과 리포트 (샘플)</title><style>
+<meta charset="utf-8"><title>수강신청 부하테스트 (샘플)</title><style>
 :root{--bg:#f6f7f9;--card:#fff;--ink:#1c2530;--muted:#5b6675;--line:#e5e9ef;--accent:#2f6df6;--good:#1a9d6e;--warn:#e5893b;--bad:#e0484d;--tps:#7b3ff2;--rt:#12a3a3;--tx:#2f6df6;--grid:#eef1f5;--chipbg:#eef2fb;}
 @media(prefers-color-scheme:dark){:root{--bg:#0f141a;--card:#161d26;--ink:#e7edf5;--muted:#9aa7b6;--line:#243040;--grid:#1e2733;--chipbg:#1a2436;}}
 :root[data-theme="dark"]{--bg:#0f141a;--card:#161d26;--ink:#e7edf5;--muted:#9aa7b6;--line:#243040;--grid:#1e2733;--chipbg:#1a2436;}
@@ -27,12 +27,12 @@ th{color:var(--muted);font-weight:600;font-size:12.5px;background:var(--grid)}
 td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
 tr.peak td{background:rgba(224,72,77,.08)}
 .tag{display:inline-block;font-size:11.5px;padding:2px 8px;border-radius:6px;font-weight:600}
-.tag.p{background:rgba(224,72,77,.14);color:var(--bad)}.tag.g{background:rgba(26,157,110,.14);color:var(--good)}.tag.w{background:rgba(229,137,59,.16);color:var(--warn)}
+.tag.p{background:rgba(224,72,77,.14);color:var(--bad)}.tag.n{background:var(--grid);color:var(--muted)}.tag.g{background:rgba(26,157,110,.14);color:var(--good)}.tag.w{background:rgba(229,137,59,.16);color:var(--warn)}
 .callout{border-left:4px solid var(--warn);background:rgba(229,137,59,.08);border-radius:0 10px 10px 0;padding:14px 16px;margin:12px 0}
 pre{background:var(--grid);border:1px solid var(--line);border-radius:9px;padding:12px 14px;overflow-x:auto;font-family:ui-monospace,Consolas,monospace;font-size:12px;line-height:1.5;margin:8px 0}
 code{background:var(--grid);padding:1px 6px;border-radius:5px;font-size:12.5px;font-family:ui-monospace,Consolas,monospace}
 ul.clean{margin:8px 0;padding-left:20px}ul.clean li{margin:6px 0}
-.chart{width:100%;height:230px;display:block}
+.chart{width:100%;height:230px;display:block}.chart.sm{height:150px}
 .legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);margin:2px 0 4px}
 .legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:6px;vertical-align:-1px}
 .foot{color:var(--muted);font-size:12px;margin-top:26px;text-align:center}
@@ -40,8 +40,8 @@ ul.clean{margin:8px 0;padding-left:20px}ul.clean li{margin:6px 0}
 </style>
 <div class="wrap">
 <header class="rep">
-  <p class="kicker">부하테스트 결과 리뷰 · WhaTap 성능추이 기반 · 자동 생성</p>
-  <h1>부하테스트 결과 리포트 (샘플)</h1>
+  <p class="kicker">2025학년도 1학기 · 부하테스트 결과 리뷰 · WhaTap 성능추이 기반 · 자동 생성</p>
+  <h1>수강신청 부하테스트 (샘플)</h1>
   <p class="sub">측정일 <b>2025-01-01</b> · 분석 구간 2025-01-01 09:40 ~ 15:30</p>
   <div class="metarow"><span>데이터 출처: WhaTap 성능 추이 (5분 단위)</span><span>지표: TPS · 응답시간 · 동시 Active Tx</span></div>
 </header>
@@ -66,6 +66,33 @@ ul.clean{margin:8px 0;padding-left:20px}ul.clean li{margin:6px 0}
   <div class="legend"><span><i style="background:var(--tps)"></i>TPS</span><span><i style="background:var(--rt)"></i>평균 응답시간 (ms)</span><span><i style="background:var(--tx)"></i>동시 Active Tx</span></div>
   <svg class="chart" id="chart" viewBox="0 0 960 240" preserveAspectRatio="none"></svg>
   <div id="axis" class="muted" style="font-size:11.5px;display:flex;justify-content:space-between"></div>
+</section>
+
+
+<section>
+  <h2><span class="n">3</span>지난 학기 대비</h2>
+  <p class="muted">비교 대상: <b>2024학년도 2학기</b> (2024-07-29) → <b>2025학년도 1학기</b> (2025-01-01)</p>
+  
+  <div class="scroll"><table>
+    <tr><th>지표</th><th class="num">2024학년도 2학기</th><th class="num">2025학년도 1학기</th><th class="num">증감</th><th>판정</th></tr>
+    <tr><td>최대 TPS</td><td class='num'>1,950</td><td class='num'><b>2,600</b></td><td class='num'>+650 (+33.3%)</td><td><span class="tag n">참고</span></td></tr><tr><td>최대 동시 Active Tx</td><td class='num'>4,940</td><td class='num'><b>3,800</b></td><td class='num'>−1,140 (−23.1%)</td><td><span class="tag g">개선</span></td></tr><tr><td>최대 평균 응답시간 (ms)</td><td class='num'>992</td><td class='num'><b>620</b></td><td class='num'>−372 (−37.5%)</td><td><span class="tag g">개선</span></td></tr><tr><td>피크 동시접속</td><td class='num'>13</td><td class='num'><b>16</b></td><td class='num'>+3 (+25.0%)</td><td><span class="tag n">참고</span></td></tr><tr><td>총 처리요청 (추정)</td><td class='num'>2,557,590</td><td class='num'><b>3,408,840</b></td><td class='num'>+851,250 (+33.3%)</td><td><span class="tag n">참고</span></td></tr><tr><td>부하 세션 수</td><td class='num'>3</td><td class='num'><b>3</b></td><td class='num'>±0 (±0.0%)</td><td><span class="tag n">참고</span></td></tr>
+  </table></div>
+  <p class="muted" style="font-size:12.5px">※ 판정: 응답시간·동시 Active Tx 는 낮을수록 개선 (±5% 미만은 유사). TPS·처리요청은 투입 부하에 따라 달라지므로 증감만 표시.</p>
+
+  <h3>회차별 비교</h3>
+  <div class="scroll"><table>
+    <tr><th>회차</th><th>지난 시간대</th><th>이번 시간대</th><th class="num">지난 TPS</th><th class="num">이번 TPS</th>
+        <th class="num">지난 응답(ms)</th><th class="num">이번 응답(ms)</th><th class="num">지난 Active Tx</th><th class="num">이번 Active Tx</th><th>응답</th></tr>
+    <tr><td>1차</td><td>10:00–10:05</td><td>10:00–10:05</td><td class='num'>712</td><td class='num'><b>950</b></td><td class='num'>224</td><td class='num'><b>140</b></td><td class='num'>1,430</td><td class='num'><b>1,100</b></td><td><span class="tag g">개선</span></td></tr><tr><td>2차</td><td>13:00–13:05</td><td>13:00–13:05</td><td class='num'>1,200</td><td class='num'><b>1,600</b></td><td class='num'>416</td><td class='num'><b>260</b></td><td class='num'>2,860</td><td class='num'><b>2,200</b></td><td><span class="tag g">개선</span></td></tr><tr><td>3차</td><td>15:00–15:10</td><td>15:00–15:10</td><td class='num'>1,950</td><td class='num'><b>2,600</b></td><td class='num'>992</td><td class='num'><b>620</b></td><td class='num'>4,940</td><td class='num'><b>3,800</b></td><td><span class="tag g">개선</span></td></tr>
+  </table></div>
+
+  <h3>추이 겹쳐 보기 <span class="muted" style="font-weight:400;font-size:12.5px">(각 학기 첫 부하 20분 전 기준 경과 시간)</span></h3>
+  <div class="legend"><span><i style="background:var(--tps)"></i>2025학년도 1학기</span><span><i style="background:var(--muted)"></i>2024학년도 2학기</span></div>
+  <p class="muted" style="margin:6px 0 0;font-size:12.5px">TPS</p>
+  <svg class="chart sm" id="cmp_tps" viewBox="0 0 960 160" preserveAspectRatio="none"></svg>
+  <p class="muted" style="margin:6px 0 0;font-size:12.5px">평균 응답시간 (ms)</p>
+  <svg class="chart sm" id="cmp_rt" viewBox="0 0 960 160" preserveAspectRatio="none"></svg>
+  <div id="cmp_axis" class="muted" style="font-size:11.5px;display:flex;justify-content:space-between"></div>
 </section>
 
 
@@ -94,5 +121,27 @@ ul.clean{margin:8px 0;padding-left:20px}ul.clean li{margin:6px 0}
  line(1,c.getPropertyValue("--tps").trim()||"#7b3ff2",mT,1.8);
  line(2,c.getPropertyValue("--rt").trim()||"#12a3a3",mR,1.8);
  var ax=document.getElementById("axis");if(ax){LAB.forEach(function(t){var s=document.createElement("span");s.textContent=t;ax.appendChild(s)})}
+})();
+
+(function(){
+ var C=[[0, 0.2, 0.3, 0.0], [5, 0.2, 0.3, 0.0], [10, 0.2, 0.3, 0.0], [15, 0.2, 0.3, 0.0], [20, 800.0, 120.0, 900.0], [25, 950.0, 140.0, 1100.0], [30, 0.2, 0.3, 0.0], [35, 0.2, 0.3, 0.0], [40, 0.2, 0.3, 0.0], [45, 0.2, 0.3, 0.0], [50, 0.2, 0.3, 0.0], [55, 0.2, 0.3, 0.0], [60, 0.2, 0.3, 0.0], [65, 0.2, 0.3, 0.0], [70, 0.2, 0.3, 0.0], [75, 0.2, 0.3, 0.0], [80, 0.2, 0.3, 0.0], [85, 0.2, 0.3, 0.0], [90, 0.2, 0.3, 0.0], [95, 0.2, 0.3, 0.0], [100, 0.2, 0.3, 0.0], [105, 0.2, 0.3, 0.0], [110, 0.2, 0.3, 0.0], [115, 0.2, 0.3, 0.0], [120, 0.2, 0.3, 0.0], [125, 0.2, 0.3, 0.0], [130, 0.2, 0.3, 0.0], [135, 0.2, 0.3, 0.0], [140, 0.2, 0.3, 0.0], [145, 0.2, 0.3, 0.0], [150, 0.2, 0.3, 0.0], [155, 0.2, 0.3, 0.0], [160, 0.2, 0.3, 0.0], [165, 0.2, 0.3, 0.0], [170, 0.2, 0.3, 0.0], [175, 0.2, 0.3, 0.0], [180, 0.2, 0.3, 0.0], [185, 0.2, 0.3, 0.0], [190, 0.2, 0.3, 0.0], [195, 0.2, 0.3, 0.0], [200, 1600.0, 260.0, 2200.0], [205, 1400.0, 240.0, 1800.0], [210, 0.2, 0.3, 0.0], [215, 0.2, 0.3, 0.0], [220, 0.2, 0.3, 0.0], [225, 0.2, 0.3, 0.0], [230, 0.2, 0.3, 0.0], [235, 0.2, 0.3, 0.0], [240, 0.2, 0.3, 0.0], [245, 0.2, 0.3, 0.0], [250, 0.2, 0.3, 0.0], [255, 0.2, 0.3, 0.0], [260, 0.2, 0.3, 0.0], [265, 0.2, 0.3, 0.0], [270, 0.2, 0.3, 0.0], [275, 0.2, 0.3, 0.0], [280, 0.2, 0.3, 0.0], [285, 0.2, 0.3, 0.0], [290, 0.2, 0.3, 0.0], [295, 0.2, 0.3, 0.0], [300, 0.2, 0.3, 0.0], [305, 0.2, 0.3, 0.0], [310, 0.2, 0.3, 0.0], [315, 0.2, 0.3, 0.0], [320, 2600.0, 620.0, 3800.0], [325, 2200.0, 540.0, 3200.0], [330, 1800.0, 300.0, 2400.0], [335, 0.2, 0.3, 0.0], [340, 0.2, 0.3, 0.0], [345, 0.2, 0.3, 0.0], [350, 0.2, 0.3, 0.0]], P=[[0, 0.2, 0.5, 0.0], [5, 0.2, 0.5, 0.0], [10, 0.2, 0.5, 0.0], [15, 0.2, 0.5, 0.0], [20, 600.0, 192.0, 1170.0], [25, 712.5, 224.0, 1430.0], [30, 0.2, 0.5, 0.0], [35, 0.2, 0.5, 0.0], [40, 0.2, 0.5, 0.0], [45, 0.2, 0.5, 0.0], [50, 0.2, 0.5, 0.0], [55, 0.2, 0.5, 0.0], [60, 0.2, 0.5, 0.0], [65, 0.2, 0.5, 0.0], [70, 0.2, 0.5, 0.0], [75, 0.2, 0.5, 0.0], [80, 0.2, 0.5, 0.0], [85, 0.2, 0.5, 0.0], [90, 0.2, 0.5, 0.0], [95, 0.2, 0.5, 0.0], [100, 0.2, 0.5, 0.0], [105, 0.2, 0.5, 0.0], [110, 0.2, 0.5, 0.0], [115, 0.2, 0.5, 0.0], [120, 0.2, 0.5, 0.0], [125, 0.2, 0.5, 0.0], [130, 0.2, 0.5, 0.0], [135, 0.2, 0.5, 0.0], [140, 0.2, 0.5, 0.0], [145, 0.2, 0.5, 0.0], [150, 0.2, 0.5, 0.0], [155, 0.2, 0.5, 0.0], [160, 0.2, 0.5, 0.0], [165, 0.2, 0.5, 0.0], [170, 0.2, 0.5, 0.0], [175, 0.2, 0.5, 0.0], [180, 0.2, 0.5, 0.0], [185, 0.2, 0.5, 0.0], [190, 0.2, 0.5, 0.0], [195, 0.2, 0.5, 0.0], [200, 1200.0, 416.0, 2860.0], [205, 1050.0, 384.0, 2340.0], [210, 0.2, 0.5, 0.0], [215, 0.2, 0.5, 0.0], [220, 0.2, 0.5, 0.0], [225, 0.2, 0.5, 0.0], [230, 0.2, 0.5, 0.0], [235, 0.2, 0.5, 0.0], [240, 0.2, 0.5, 0.0], [245, 0.2, 0.5, 0.0], [250, 0.2, 0.5, 0.0], [255, 0.2, 0.5, 0.0], [260, 0.2, 0.5, 0.0], [265, 0.2, 0.5, 0.0], [270, 0.2, 0.5, 0.0], [275, 0.2, 0.5, 0.0], [280, 0.2, 0.5, 0.0], [285, 0.2, 0.5, 0.0], [290, 0.2, 0.5, 0.0], [295, 0.2, 0.5, 0.0], [300, 0.2, 0.5, 0.0], [305, 0.2, 0.5, 0.0], [310, 0.2, 0.5, 0.0], [315, 0.2, 0.5, 0.0], [320, 1950.0, 992.0, 4940.0], [325, 1650.0, 864.0, 4160.0], [330, 1350.0, 480.0, 3120.0], [335, 0.2, 0.5, 0.0], [340, 0.2, 0.5, 0.0], [345, 0.2, 0.5, 0.0], [350, 0.2, 0.5, 0.0]]; if(!C.length)return;
+ var W=960,H=160,pt=10,pb=6;
+ var mx=Math.max(C[C.length-1][0], P.length?P[P.length-1][0]:0)||1;
+ var NS="http://www.w3.org/2000/svg", cs=getComputedStyle(document.documentElement);
+ function draw(id,k){var svg=document.getElementById(id);if(!svg)return;
+  var m=Math.max.apply(0,C.concat(P).map(function(d){return d[k]}))||1;
+  for(var g=1;g<4;g++){var yy=pt+g*(H-pt-pb)/4,ln=document.createElementNS(NS,"line");
+   ln.setAttribute("x1",0);ln.setAttribute("x2",W);ln.setAttribute("y1",yy);ln.setAttribute("y2",yy);
+   ln.setAttribute("stroke","currentColor");ln.setAttribute("opacity",".08");svg.appendChild(ln)}
+  function path(D,color,w,dash){if(!D.length)return;var d="";D.forEach(function(r,i){
+    d+=(i?"L":"M")+(r[0]/mx*W).toFixed(1)+","+((H-pb)-r[k]/m*(H-pt-pb)).toFixed(1)+" "});
+   var p=document.createElementNS(NS,"path");p.setAttribute("d",d);p.setAttribute("fill","none");
+   p.setAttribute("stroke",color);p.setAttribute("stroke-width",w);p.setAttribute("stroke-linejoin","round");
+   if(dash)p.setAttribute("stroke-dasharray",dash);svg.appendChild(p)}
+  path(P,cs.getPropertyValue("--muted").trim()||"#888",1.6,"5 4");
+  path(C,cs.getPropertyValue("--tps").trim()||"#7b3ff2",2,null)}
+ draw("cmp_tps",1);draw("cmp_rt",2);
+ var ax=document.getElementById("cmp_axis");if(ax){for(var i=0;i<=6;i++){var s=document.createElement("span");
+  var t=Math.round(mx*i/6);s.textContent="+"+Math.floor(t/60)+":"+("0"+t%60).slice(-2);ax.appendChild(s)}}
 })();
 </script>

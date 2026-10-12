@@ -7,6 +7,9 @@ test_report*.html
 # 작업 인계/기록 (내부 IP·자격증명 포함 가능)
 *인계*.md
 *_notes.md
+# 학기별 요약(실제 집계값) — 로컬 보관
+*.summary.json
+history/
 
 # 파이썬
 __pycache__/
